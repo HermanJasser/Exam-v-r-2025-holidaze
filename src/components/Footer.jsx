@@ -7,7 +7,7 @@ const Footer = () => {
         <img
           src="/assets/Holidaze.svg"
           alt="Holidaze logo"
-          className="mx-auto h-[60px]"
+          className="mx-auto h-[40px] md:h-[60px] hover:scale-[1.01] transition-transform duration-200"
         />
       </div>
     </footer>
