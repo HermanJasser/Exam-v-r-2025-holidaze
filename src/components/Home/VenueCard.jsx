@@ -8,8 +8,8 @@ export default function VenueCard({ venue }) {
 
   return (
     <a
-      href={`/venues/${id}`}
-      className="block bg-white rounded-lg shadow hover:shadow-lg transition focus:outline-none focus:ring-2 focus:ring-primGreen overflow-hidden"
+      href={`/venue/${id}`}
+      className="block bg-white hover:shadow-lg transition focus:outline-none focus:ring-2 focus:ring-primGreen overflow-hidden"
     >
       {/* Bilde */}
       {imageUrl && (
@@ -22,7 +22,7 @@ export default function VenueCard({ venue }) {
 
       <div className="p-4 flex flex-col">
         {/* By, land */}
-        <p className="text-gray-600 text-sm">
+        <p className="text-textSek text-sm">
           {location.city}, {location.country}
         </p>
 
@@ -32,16 +32,16 @@ export default function VenueCard({ venue }) {
         </h2>
 
         {/* Maks gjester */}
-        <p className="text-gray-600 text-sm mt-1">
+        <p className="text-textSek text-sm mt-1">
           {maxGuests} beds
         </p>
 
         {/* Pris */}
         <div className="mt-auto pt-2">
-          <span className="font-bold text-primGreen">
+          <span className="font-bold text-textprim">
             {price} kr
           </span>
-          <span className="text-gray-500 text-sm"> / Night</span>
+          <span className="text-textSek text-sm"> / Night</span>
         </div>
       </div>
     </a>

@@ -10,7 +10,7 @@ function App() {
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/venue/" element={<SingleVenue />} />
+            <Route path="/venue/:id" element={<SingleVenue />} />
           </Routes>
         </Layout>
       </Router>
