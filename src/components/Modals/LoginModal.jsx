@@ -1,6 +1,7 @@
 // src/Modals/LoginModal.jsx
 import React, { useState } from 'react';
 import Modal from './Modal';
+import { useAuth } from '../../context/AuthContext';
 
 const BASE = 'https://v2.api.noroff.dev';
 
@@ -8,6 +9,7 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess, onOpenRegi
   const [email, setEmail]     = useState('');
   const [password, setPassword] = useState('');
   const [error, setError]     = useState('');
+  const { login }               = useAuth(); 
 
   const handleLogin = async e => {
     e.preventDefault();
@@ -23,8 +25,10 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess, onOpenRegi
       localStorage.setItem('accessToken', json.data.accessToken);
         localStorage.setItem('username', json.data.name);
       console.log('Login successful:', json.data.name);
-      onLoginSuccess(json.data.accessToken);
+     // onLoginSuccess(json.data.accessToken);
+     login(json.data.accessToken, json.data.name);
       onClose();
+      
     } catch {
       setError('Login failed. Check your credentials.');
     }
