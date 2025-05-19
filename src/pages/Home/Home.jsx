@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { LuSearch } from 'react-icons/lu';
+import ListVenues from './ListVenues';
 
 export default function Home() {
   return (
@@ -36,15 +37,7 @@ export default function Home() {
     </div>
 
     <div>
-        <div className="container mx-auto text-center py-16">
-            <h2 className="text-4xl font-bold mb-8">Discover Amazing Venues</h2>
-            <p className="text-lg text-gray-600 mb-4">
-            Explore a curated list of stunning venues for your next event.
-            </p>
-            <button className="bg-primGreen text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-700 transition duration-300">
-            View Venues
-            </button>
-        </div>
+        <ListVenues />
     </div>
 
     </div>
