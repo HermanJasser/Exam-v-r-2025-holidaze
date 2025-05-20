@@ -5,7 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 
 const BASE = 'https://v2.api.noroff.dev';
 
-export default function LoginModal({ isOpen, onClose, onLoginSuccess, onOpenRegister }) {
+export default function LoginModal({ isOpen, onClose, onOpenRegister }) {
   const [email, setEmail]     = useState('');
   const [password, setPassword] = useState('');
   const [error, setError]     = useState('');
@@ -24,7 +24,7 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess, onOpenRegi
       if (!res.ok) throw new Error(json.error || `Status ${res.status}`);
       localStorage.setItem('accessToken', json.data.accessToken);
         localStorage.setItem('username', json.data.name);
-      console.log('Login successful:', json.data.name);
+      //console.log('Login successful:', json.data.name);
      // onLoginSuccess(json.data.accessToken);
      login(json.data.accessToken, json.data.name);
       onClose();
