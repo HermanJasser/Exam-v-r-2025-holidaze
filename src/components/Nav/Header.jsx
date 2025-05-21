@@ -46,13 +46,13 @@ export default function Header() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-20">
-            <Link
+            {/*<Link
               to="/"
               className="flex items-center text-2xl font-medium font-dmsans hover:text-textSek hover:scale-[1.01] transition"
             >
               <LuMapPinned className="text-4xl mr-2" />
               Venues
-            </Link>
+      </Link>*/}
 
             {isAuthenticated ? (
               <div className="flex items-center gap-6">
@@ -92,14 +92,14 @@ export default function Header() {
 
         {menuOpen && (
           <div className="fixed md:hidden top-[80px] left-0 w-full h-[calc(100vh-80px)] bg-primBG z-0 flex flex-col p-4 items-center">
-            <Link
+           {/* <Link
               to="/"
               onClick={() => setMenuOpen(false)}
               className="text-2xl font-medium font-dmsans hover:text-textSek transition mb-4"
             >
               <LuMapPinned className="inline mr-2" />
               Venues
-            </Link>
+        </Link>*/}
 
             {isAuthenticated ? (
               <>
