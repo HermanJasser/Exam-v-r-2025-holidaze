@@ -5,6 +5,7 @@ import { AuthProvider } from './context/AuthContext';
 import Home from './pages/Home/Home';
 import SingleVenue from './pages/SingleVenue/SingleVenue';
 import Dashboard from './pages/Dashboard/Dashboard';
+import HostVenue from './pages/Dashboard/HostVenue';
 import SearchedVenues from './pages/Searched/SearchedVenues';
 import Layout from './components/Layout';
 import ProtectedRoute from './context/ProtectedRoute';  
@@ -18,9 +19,14 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/venue/:id" element={<SingleVenue />} />
             <Route path="/search/" element={<SearchedVenues />} />
-            <Route path="/Dashboard/" element={
+            <Route path="/dashboard/" element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/dashboard/hostvenue" element={
+              <ProtectedRoute>
+                <HostVenue />
               </ProtectedRoute>
             } />
           </Routes>

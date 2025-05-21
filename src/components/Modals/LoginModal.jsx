@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import Modal from './Modal';
 import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const BASE = 'https://v2.api.noroff.dev';
 
@@ -10,6 +11,7 @@ export default function LoginModal({ isOpen, onClose, onOpenRegister }) {
   const [password, setPassword] = useState('');
   const [error, setError]     = useState('');
   const { login }               = useAuth(); 
+  const navigate = useNavigate();
 
   const handleLogin = async e => {
     e.preventDefault();
@@ -24,10 +26,10 @@ export default function LoginModal({ isOpen, onClose, onOpenRegister }) {
       if (!res.ok) throw new Error(json.error || `Status ${res.status}`);
       localStorage.setItem('accessToken', json.data.accessToken);
         localStorage.setItem('username', json.data.name);
-      //console.log('Login successful:', json.data.name);
-     // onLoginSuccess(json.data.accessToken);
      login(json.data.accessToken, json.data.name);
       onClose();
+
+      navigate('dashboard'); 
       
     } catch {
       setError('Login failed. Check your credentials.');

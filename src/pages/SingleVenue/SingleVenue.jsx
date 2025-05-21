@@ -22,7 +22,7 @@ export default function SingleVenue() {
       })
       .then(json => {
         setVenue(json.data);
-        console.log(json.data);
+        //console.log(json.data);
         setCurrentIndex(0);
       })
       .catch(err => {
@@ -40,9 +40,6 @@ export default function SingleVenue() {
 
    // Log if media array is empty
    const hasMedia = Array.isArray(media) && media.length > 0;
-   if (!hasMedia) {
-     console.log('Media array is empty for venue ID:', id);
-   }
 
   
   // Define all possible amenities
