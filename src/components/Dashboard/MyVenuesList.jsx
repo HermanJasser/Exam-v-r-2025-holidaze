@@ -69,7 +69,7 @@ export default function MyVenuesList() {
   return (
     <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {venues.map((v) => (
-        <div key={v.id} className="bg-white hover:shadow-lg transition overflow-hidden rounded-lg flex flex-col">
+        <div key={v.id} className="bg-white shadow hover:shadow-lg hover:scale-[1.01] transition overflow-hidden flex flex-col">
           {/* Link for image and details */}
           <Link to={`/venue/${v.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primGreen">
             <img

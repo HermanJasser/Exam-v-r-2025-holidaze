@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import EditProfileModal from '../../components/Modals/EditProfileModal';
 import { useNavigate } from 'react-router-dom';
 import MyVenuesList from '../../components/Dashboard/MyVenuesList';
+import BookingsToMyVenuesList from '../../components/Dashboard/BookingsToMyVenuesList';
 
 export default function HostDashboard() {
   const navigate = useNavigate();
@@ -182,7 +183,7 @@ export default function HostDashboard() {
             <MyVenuesList />
           )}
           {activeTab === 'bookingsTo' && (
-            <p className="text-gray-500">(Bookings to your venues would go here.)</p>
+            <BookingsToMyVenuesList />
           )}
         </div>
       </div>
