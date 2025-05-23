@@ -6,6 +6,7 @@ import Home from './pages/Home/Home';
 import SingleVenue from './pages/SingleVenue/SingleVenue';
 import Dashboard from './pages/Dashboard/Dashboard';
 import HostVenue from './pages/Dashboard/HostVenue';
+import EditVenue from './pages/Dashboard/EditVenue';
 import SearchedVenues from './pages/Searched/SearchedVenues';
 import Layout from './components/Layout';
 import ProtectedRoute from './context/ProtectedRoute';  
@@ -27,6 +28,11 @@ function App() {
             <Route path="/dashboard/hostvenue" element={
               <ProtectedRoute>
                 <HostVenue />
+              </ProtectedRoute>
+            } />
+             <Route path="/dashboard/editvenue/:id" element={
+              <ProtectedRoute>
+                <EditVenue />
               </ProtectedRoute>
             } />
           </Routes>

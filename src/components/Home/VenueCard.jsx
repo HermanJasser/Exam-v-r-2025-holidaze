@@ -12,7 +12,7 @@ export default function VenueCard({ venue }) {
   return (
     <a
       href={`/venue/${id}`}
-      className="block bg-white hover:shadow-lg transition focus:outline-none focus:ring-2 focus:ring-primGreen overflow-hidden"
+      className="block bg-white shadow hover:shadow-lg hover:scale-[1.01] transition focus:outline-none focus:ring-2 focus:ring-primGreen overflow-hidden"
     >
       {/* Bilde – alltid et <img>, men fallback til placeholder */}
       <img

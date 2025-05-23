@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import EditProfileModal from '../../components/Modals/EditProfileModal';
 import { useNavigate } from 'react-router-dom';
 import MyVenuesList from '../../components/Dashboard/MyVenuesList';
+import BookingsToMyVenuesList from '../../components/Dashboard/BookingsToMyVenuesList';
+import MyBookings from '../../components/Dashboard/MyBookings';
 
 export default function HostDashboard() {
   const navigate = useNavigate();
@@ -39,6 +41,7 @@ export default function HostDashboard() {
         });
         if (!res.ok) throw new Error(`Failed to fetch profile: ${res.status}`);
         const { data } = await res.json();
+        //console.log(data);
         setBannerUrl(data.banner.url);
         setAvatarUrl(data.avatar.url);
         setEmail(data.email);
@@ -145,7 +148,7 @@ export default function HostDashboard() {
                 : 'pb-2 text-gray-600'
               }
             >
-              Booking (0)
+              Bookings
             </button>
 
             {venueManager && (
@@ -176,13 +179,13 @@ export default function HostDashboard() {
 
         <div className="mt-6">
           {activeTab === 'bookings' && (
-            <p className="text-gray-500">(Your bookings would go here.)</p>
+            <MyBookings />
           )}
           {activeTab === 'venues' && (
             <MyVenuesList />
           )}
           {activeTab === 'bookingsTo' && (
-            <p className="text-gray-500">(Bookings to your venues would go here.)</p>
+            <BookingsToMyVenuesList />
           )}
         </div>
       </div>
