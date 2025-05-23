@@ -27,7 +27,7 @@ export default function EditProfileModal({
           type="text"
           value={bannerUrl}
           onChange={e => onBannerChange(e.target.value)}
-          className="mt-1 block w-full border rounded p-2"
+          className="mt-1 block w-full border rounded p-2 w-[350px]"
         />
       </label>
 

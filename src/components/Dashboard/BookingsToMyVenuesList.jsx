@@ -68,7 +68,7 @@ export default function BookingsToMyVenuesList() {
             )}
             {/* Venue Image */}
             <img
-              src={b.venue.media[0]?.url}
+              src={b.venue.media[0]?.url || '/assets/placeholder-image.jpg'}
               alt={b.venue.media[0]?.alt || b.venue.name}
               className="w-full h-40 object-cover"
             />
@@ -85,14 +85,14 @@ export default function BookingsToMyVenuesList() {
               </p>
 
               <p className="text-textSek text-sm">
-                Booket av: <span className="font-medium">{b.customer.name}</span>
+                Booked by: <span className="font-medium">{b.customer.name}</span>
               </p>
               <p className="text-textSek text-sm mb-2">
-                E-post: <span className="font-medium">{b.customer.email}</span>
+                Email: <span className="font-medium">{b.customer.email}</span>
               </p>
 
               <p className="mt-auto text-textPrim font-bold">
-                {b.guests} gjester
+                {b.guests} guest(s)
               </p>
             </div>
           </div>
