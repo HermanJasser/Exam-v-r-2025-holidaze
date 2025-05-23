@@ -102,7 +102,8 @@ export default function SingleVenue() {
             {price} NOK <span className="text-base font-normal text-gray-600">/ Night</span>
           </p>
     
-          {username || token  && (<button 
+          {token && (
+          <button 
         onClick={() => setIsBookOpen(true)}
         className="mt-6  px-8 py-3 bg-primGreen text-primBG font-medium rounded-lg">
           Check availability

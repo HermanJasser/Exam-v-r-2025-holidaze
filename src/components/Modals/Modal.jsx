@@ -1,3 +1,4 @@
+// src/components/Modals/Modal.jsx
 import React from 'react';
 
 export default function Modal({ isOpen, onClose, title, children }) {
@@ -8,14 +9,23 @@ export default function Modal({ isOpen, onClose, title, children }) {
       onClick={onClose}
     >
       <div
-        className="bg-sekBG overflow-hidden w-full max-w-lg p-10"
+        className="
+          bg-sekBG 
+          w-fit     
+          max-w-[90vw]             
+          max-h-[90vh]    
+      
+         
+         
+          p-6
+        "
         onClick={e => e.stopPropagation()}
       >
-        <div className="flex justify-between items-center p-4 border-b ">
+        <div className="flex justify-between items-center border-b pb-2 mb-4">
           <h3 className="text-xl font-semibold">{title}</h3>
           <button onClick={onClose} className="text-2xl leading-none">&times;</button>
         </div>
-        <div className="p-6">{children}</div>
+        {children}
       </div>
     </div>
   );

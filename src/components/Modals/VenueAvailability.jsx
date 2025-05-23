@@ -1,34 +1,54 @@
-import React, { useState } from 'react';
-import Modal from './Modal'; // your existing modal wrapper
+// src/components/Modals/VenueAvailability.jsx
+import React, { useState, useEffect } from 'react';
+import { addDays } from 'date-fns';
+import Modal from './Modal';
+import DateRangeSelector from './DateRangeSelector';
 
-export default function VenueAvailability({ 
-  isOpen, 
-  onClose, 
-  venueId, 
-  maxGuests 
-}) {
-  const [dateFrom, setDateFrom] = useState('');
-  const [dateTo, setDateTo]       = useState('');
-  const [guests, setGuests]       = useState(1);
-  const [error, setError]         = useState('');
-  const [success, setSuccess]     = useState('');
+export default function VenueAvailability({ isOpen, onClose, venueId, maxGuests }) {
+  const [range, setRange] = useState({
+    startDate: new Date(),
+    endDate:   addDays(new Date(), 1),
+    key:       'selection'
+  });
+  const [disabledRanges, setDisabledRanges] = useState([]);
+  const [guests, setGuests]   = useState(1);
+  const [error, setError]     = useState('');
+  const [success, setSuccess] = useState('');
   const token = localStorage.getItem('accessToken');
   const baseUrl = 'https://v2.api.noroff.dev/holidaze';
 
-  const handleApply = async () => {
-    setError(''); 
-    setSuccess('');
+  // when modal opens, fetch existing bookings to disable dates
+  useEffect(() => {
+    if (!isOpen) return;
+    fetch(`${baseUrl}/bookings?venueId=${venueId}&_bookings=true`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'X-Noroff-API-Key': '3d9461d4-d476-4b79-8364-62104fda6397'
+      }
+    })
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(json => {
+      setDisabledRanges(
+        json.data.map(b => ({
+          startDate: new Date(b.dateFrom),
+          endDate:   new Date(b.dateTo)
+        }))
+      );
+    })
+    .catch(() => {
+      setDisabledRanges([]);
+    });
+  }, [isOpen, venueId, token]);
 
-    if (!dateFrom || !dateTo) {
-      setError('Vennligst velg både fra- og til-dato.');
-      return;
-    }
-    if (new Date(dateTo) <= new Date(dateFrom)) {
-      setError('Til-dato må være etter fra-dato.');
+  const handleBook = async () => {
+    setError(''); setSuccess('');
+    const { startDate, endDate } = range;
+    if (endDate <= startDate) {
+      setError('“To” date must come after “From.”');
       return;
     }
     if (guests < 1 || guests > maxGuests) {
-      setError(`Antall gjester må være mellom 1 og ${maxGuests}.`);
+      setError(`Guests must be between 1 and ${maxGuests}.`);
       return;
     }
 
@@ -41,8 +61,8 @@ export default function VenueAvailability({
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          dateFrom,
-          dateTo,
+          dateFrom: startDate.toISOString(),
+          dateTo:   endDate.toISOString(),
           guests,
           venueId
         })
@@ -51,8 +71,7 @@ export default function VenueAvailability({
         const txt = await res.text();
         throw new Error(JSON.parse(txt).errors?.[0]?.message || res.statusText);
       }
-      setSuccess('Booking bekreftet!');
-      // optionally close after a delay:
+      setSuccess('Booking confirmed!');
       setTimeout(onClose, 1500);
     } catch (err) {
       setError(err.message);
@@ -62,52 +81,29 @@ export default function VenueAvailability({
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Booking">
       <div className="space-y-6">
-        {/* Dates */}
-        <div>
-          <h3 className="font-medium">When are you staying?</h3>
-          <div className="mt-2 grid grid-cols-2 gap-4">
-            <div className="flex flex-col">
-              <label className="text-sm text-gray-600">From</label>
-              <input
-                type="date"
-                value={dateFrom}
-                onChange={e => setDateFrom(e.target.value)}
-                className="mt-1 border rounded p-2"
-              />
-            </div>
-            <div className="flex flex-col">
-              <label className="text-sm text-gray-600">To</label>
-              <input
-                type="date"
-                value={dateTo}
-                onChange={e => setDateTo(e.target.value)}
-                className="mt-1 border rounded p-2"
-              />
-            </div>
-          </div>
-        </div>
+        <p className="text-gray-600">When are you staying?</p>
+        <DateRangeSelector
+          range={range}
+          onChange={(sel) => setRange(sel)}
+          disabledRanges={disabledRanges}
+        />
 
-        {/* Guests */}
         <div>
-          <h3 className="font-medium">How many guests?</h3>
+          <label className="block font-medium">How many guests?</label>
           <input
             type="number"
             min={1}
             max={maxGuests}
             value={guests}
-            onChange={e => setGuests(Number(e.target.value))}
-            className="mt-2 w-full border rounded p-2"
+            onChange={e => setGuests(+e.target.value)}
+            className="mt-1 w-full border rounded p-2"
           />
-          <p className="text-sm text-gray-500 mt-1">
-            Max allowed: {maxGuests}
-          </p>
+          <p className="text-xs text-gray-500">Max allowed: {maxGuests}</p>
         </div>
 
-        {/* Error / Success */}
-        {error && <div className="text-red-700 bg-red-100 p-3 rounded">{error}</div>}
-        {success && <div className="text-green-700 bg-green-100 p-3 rounded">{success}</div>}
+        {error &&   <div className="bg-red-100 text-red-700 p-3 rounded">{error}</div>}
+        {success && <div className="bg-green-100 text-green-700 p-3 rounded">{success}</div>}
 
-        {/* Actions */}
         <div className="flex justify-end space-x-4 pt-4 border-t">
           <button
             onClick={onClose}
@@ -116,10 +112,10 @@ export default function VenueAvailability({
             Cancel
           </button>
           <button
-            onClick={handleApply}
-            className="px-4 py-2 rounded bg-black text-white hover:bg-gray-900"
+            onClick={handleBook}
+            className="px-4 py-2 rounded bg-primGreen text-white hover:bg-sekGreen"
           >
-            Apply
+            Book
           </button>
         </div>
       </div>

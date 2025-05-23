@@ -38,7 +38,7 @@ export default function LoginModal({ isOpen, onClose, onOpenRegister }) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Log in">
-      <form onSubmit={handleLogin} className="flex flex-col gap-4">
+      <form onSubmit={handleLogin} className="flex flex-col w-[350px] gap-4">
         {error && <p className="text-redPrim">{error}</p>}
         <input
           type="email"

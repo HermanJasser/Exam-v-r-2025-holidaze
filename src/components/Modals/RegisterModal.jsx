@@ -77,7 +77,7 @@ export default function RegisterModal({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Create account">
-      <form onSubmit={handleRegister} className="flex flex-col gap-4">
+      <form onSubmit={handleRegister} className="flex w-[350px] flex-col gap-4">
         {errors.submit && <p className="text-redPrim">{errors.submit}</p>}
 
         <div>
