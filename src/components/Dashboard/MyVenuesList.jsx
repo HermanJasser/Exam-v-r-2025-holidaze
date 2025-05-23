@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import Loading from '../Loading';
 
 export default function MyVenuesList() {
   const navigate = useNavigate();
@@ -11,12 +12,6 @@ export default function MyVenuesList() {
     const token = localStorage.getItem('accessToken');
     const user = localStorage.getItem('username');
     const baseUrl = 'https://v2.api.noroff.dev/holidaze';
-
-    if (!token || !user) {
-      setError('Missing authentication.');
-      setLoading(false);
-      return;
-    }
 
     const fetchVenues = async () => {
       try {
@@ -63,7 +58,7 @@ export default function MyVenuesList() {
     }
   };
 
-  if (loading) return <p>Laster venues…</p>;
+  if (loading) return <p><Loading/></p>;
   if (error) return <p className="text-red-600">{error}</p>;
 
   return (

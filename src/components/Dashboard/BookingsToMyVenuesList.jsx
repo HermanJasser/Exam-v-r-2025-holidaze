@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Loading from '../Loading';
 
 export default function BookingsToMyVenuesList() {
   const [bookings, setBookings] = useState([]);
@@ -46,7 +47,7 @@ export default function BookingsToMyVenuesList() {
     fetchMyBookings();
   }, []);
 
-  if (loading) return <p>Laster bookinger…</p>;
+  if (loading) return <p><Loading/></p>;
   if (error) return <p className="text-red-600">{error}</p>;
 
   const now = new Date();

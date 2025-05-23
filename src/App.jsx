@@ -20,6 +20,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/venue/:id" element={<SingleVenue />} />
             <Route path="/search/" element={<SearchedVenues />} />
+            
             <Route path="/dashboard/" element={
               <ProtectedRoute>
                 <Dashboard />

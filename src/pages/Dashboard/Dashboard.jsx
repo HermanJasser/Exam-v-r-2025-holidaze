@@ -19,7 +19,7 @@ export default function HostDashboard() {
   const [bannerInput, setBannerInput] = useState('');
   const [avatarInput, setAvatarInput] = useState('');
   const [venueManagerInput, setVenueManagerInput] = useState(false);
-  const [activeTab, setActiveTab] = useState('bookings');
+  const [activeTab, setActiveTab] = useState('');
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
@@ -27,10 +27,6 @@ export default function HostDashboard() {
     const baseUrl = 'https://v2.api.noroff.dev/holidaze';
 
     async function fetchProfile() {
-      if (!token || !user) {
-        setError('Missing authentication. Please log in.');
-        return;
-      }
       setUsername(user);
       try {
         const res = await fetch(`${baseUrl}/profiles/${user}`, {

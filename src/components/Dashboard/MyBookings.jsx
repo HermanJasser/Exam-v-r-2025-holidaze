@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../Loading';
 
 export default function MyBookings() {
   const navigate = useNavigate();
@@ -26,9 +27,10 @@ export default function MyBookings() {
           }
         );
         if (!res.ok) throw new Error(`Feil ${res.status}`);
-        console.log('STATUS', res.status, 'OK?', res.ok);
+        //console.log('STATUS', res.status, 'OK?', res.ok);
+        //console.log(username, token)
         const json = await res.json();
-        console.log(res);
+        //console.log(res);
         setBookings(json.data);
        //console.log(json.data[0]); 
       } catch (err) {
@@ -67,21 +69,23 @@ export default function MyBookings() {
     }
   };
 
-  if (loading) return <p>Loading bookings…</p>;
+  if (loading) return <p><Loading/></p>;
   if (error) return <p className="text-red-600">{error}</p>;
   if (bookings.length === 0) return <p>No bookings found</p>;
+  
 
   return (
     <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {bookings.map((b) => (
-        <div key={b.id} className="bg-white rounded-lg shadow p-4 flex flex-col">
+        <div key={b.id} className="bg-white shadow flex flex-col">
           {/* Venue image */}
-          <img
-            src={b.venue.media[0].url}
-            alt={b.venue.name}
-            className="w-full h-40 object-cover rounded mb-4"
-          />
+ <img
+   src={b.venue?.media?.[0]?.url || '/assets/placeholder.jpg'}
+   alt={b.venue?.name || 'Venue image'}
+   className="w-full h-40 object-cover "
+/>
 
+<div className='p-4'>
           {/* Venue name */}
           <h2 className="text-xl font-semibold mb-1">{b.venue.name}</h2>
 
@@ -97,17 +101,12 @@ export default function MyBookings() {
           {/* Actions */}
           <div className="mt-auto flex space-x-2 pt-4">
             <button
-              onClick={() => handleEdit(b.id)}
-              className="bg-primGreen text-white px-4 py-2 rounded hover:bg-sekGreen transition"
-            >
-              Edit
-            </button>
-            <button
               onClick={() => handleDelete(b.id)}
               className="bg-redPrim text-white px-4 py-2 rounded hover:bg-redSek transition"
             >
               Delete
             </button>
+            </div>
           </div>
         </div>
       ))}
