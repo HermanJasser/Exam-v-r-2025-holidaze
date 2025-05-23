@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import VenueAvailability from '../../components/Modals/VenueAvailability';
 import Loading from '../../components/Loading';
 import { LuWifi, LuParkingMeter, LuCoffee, LuDog } from 'react-icons/lu';
 
@@ -9,6 +10,7 @@ export default function SingleVenue() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isBookOpen, setIsBookOpen] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -98,9 +100,17 @@ export default function SingleVenue() {
             {price} NOK <span className="text-base font-normal text-gray-600">/ Night</span>
           </p>
     
-        <button className="mt-6  px-8 py-3 bg-primGreen text-primBG font-medium rounded-lg">
+        <button 
+        onClick={() => setIsBookOpen(true)}
+        className="mt-6  px-8 py-3 bg-primGreen text-primBG font-medium rounded-lg">
           Check availability
         </button>
+
+        <VenueAvailability
+     isOpen={isBookOpen}
+      onClose={() => setIsBookOpen(false)}
+      venueId={id}
+    maxGuests={venue.maxGuests} />
       </div>
 
       <hr />
