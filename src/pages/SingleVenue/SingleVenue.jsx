@@ -11,6 +11,8 @@ export default function SingleVenue() {
   const [error, setError] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isBookOpen, setIsBookOpen] = useState(false);
+  const username = localStorage.getItem('username');
+  const token = localStorage.getItem('accessToken');
 
   useEffect(() => {
     if (!id) return;
@@ -34,7 +36,7 @@ export default function SingleVenue() {
       .finally(() => setLoading(false));
   }, [id]);
 
-  if (loading) return <div className="text-center py-10"><Loading /></div>;
+  if (loading) return <div className="text-center py-10 mb-[1000px]"><Loading /></div>;
   if (error)   return <div className="text-center py-10 text-red-500">{error}</div>;
   if (!venue)  return <div className="text-center py-10">Venue not found.</div>;
 
@@ -100,11 +102,11 @@ export default function SingleVenue() {
             {price} NOK <span className="text-base font-normal text-gray-600">/ Night</span>
           </p>
     
-        <button 
+          {username || token  && (<button 
         onClick={() => setIsBookOpen(true)}
         className="mt-6  px-8 py-3 bg-primGreen text-primBG font-medium rounded-lg">
           Check availability
-        </button>
+        </button>)}
 
         <VenueAvailability
      isOpen={isBookOpen}
