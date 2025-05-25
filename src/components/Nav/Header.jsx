@@ -1,35 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation }  from 'react-router-dom';
-import { LuUser, LuMenu, LuX } from 'react-icons/lu';
-import LoginModal    from '../Modals/LoginModal';
-import RegisterModal from '../Modals/RegisterModal';
-import { useAuth }   from '../../context/AuthContext';
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { LuUser, LuMenu, LuX } from "react-icons/lu";
+import LoginModal from "../Modals/LoginModal";
+import RegisterModal from "../Modals/RegisterModal";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Header() {
   const { isAuthenticated, logout } = useAuth();
-  const location    = useLocation();
-  const [scrolled, setScrolled]         = useState(false);
-  const [menuOpen, setMenuOpen]         = useState(false);
-  const [showLogin, setShowLogin]       = useState(false);
+  const location = useLocation();
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
 
   useEffect(() => {
-    if (location.pathname !== '/') return;
+    if (location.pathname !== "/") return;
     const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, [location.pathname]);
 
- 
   useEffect(() => {
     const onResize = () => window.innerWidth >= 768 && setMenuOpen(false);
-    window.addEventListener('resize', onResize);
+    window.addEventListener("resize", onResize);
     onResize();
-    return () => window.removeEventListener('resize', onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
- 
-  const isHome = location.pathname === '/';
+  const isHome = location.pathname === "/";
   const isOpaque = !isHome || scrolled || menuOpen || showLogin || showRegister;
 
   return (
@@ -37,7 +35,7 @@ export default function Header() {
       <header
         className={
           `fixed top-0 left-0 w-full z-50 transition-colors duration-300 ` +
-          (isOpaque ? 'bg-primBG shadow-md' : 'bg-transparent')
+          (isOpaque ? "bg-primBG shadow-md" : "bg-transparent")
         }
       >
         <div className="w-full max-w-screen-xl mx-auto flex items-center justify-between h-[80px] px-4 md:px-6">
@@ -79,7 +77,7 @@ export default function Header() {
 
           <button
             className="md:hidden p-2 text-3xl"
-            onClick={() => setMenuOpen(o => !o)}
+            onClick={() => setMenuOpen((o) => !o)}
             aria-label="Toggle menu"
           >
             {menuOpen ? <LuX /> : <LuMenu />}
@@ -99,7 +97,10 @@ export default function Header() {
                   Dashboard
                 </Link>
                 <button
-                  onClick={() => { logout(); setMenuOpen(false); }}
+                  onClick={() => {
+                    logout();
+                    setMenuOpen(false);
+                  }}
                   className="text-2xl font-medium font-dmsans hover:text-redSek transition"
                 >
                   Sign out
@@ -107,7 +108,10 @@ export default function Header() {
               </>
             ) : (
               <button
-                onClick={() => { setMenuOpen(false); setShowLogin(true); }}
+                onClick={() => {
+                  setMenuOpen(false);
+                  setShowLogin(true);
+                }}
                 className="text-2xl font-medium font-dmsans hover:text-textSek transition"
               >
                 <LuUser className="inline mr-2" />

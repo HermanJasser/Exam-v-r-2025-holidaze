@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export default function Modal({ isOpen, onClose, title, children }) {
   if (!isOpen) return null;
@@ -18,11 +18,13 @@ export default function Modal({ isOpen, onClose, title, children }) {
          
           p-6
         "
-        onClick={e => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-center border-b pb-2 mb-4">
           <h3 className="text-xl font-semibold">{title}</h3>
-          <button onClick={onClose} className="text-2xl leading-none">&times;</button>
+          <button onClick={onClose} className="text-2xl leading-none">
+            &times;
+          </button>
         </div>
         {children}
       </div>

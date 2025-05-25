@@ -1,37 +1,36 @@
-import React, { useState } from 'react';
-import Modal from './Modal';
-import { useAuth } from '../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import Modal from "./Modal";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-const BASE = 'https://v2.api.noroff.dev';
+const BASE = "https://v2.api.noroff.dev";
 
 export default function LoginModal({ isOpen, onClose, onOpenRegister }) {
-  const [email, setEmail]     = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError]     = useState('');
-  const { login }               = useAuth(); 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async e => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     try {
       const res = await fetch(`${BASE}/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || `Status ${res.status}`);
-      localStorage.setItem('accessToken', json.data.accessToken);
-        localStorage.setItem('username', json.data.name);
-     login(json.data.accessToken, json.data.name);
+      localStorage.setItem("accessToken", json.data.accessToken);
+      localStorage.setItem("username", json.data.name);
+      login(json.data.accessToken, json.data.name);
       onClose();
 
-      navigate('dashboard'); 
-      
+      navigate("dashboard");
     } catch {
-      setError('Login failed. Check your credentials.');
+      setError("Login failed. Check your credentials.");
     }
   };
 
@@ -44,7 +43,7 @@ export default function LoginModal({ isOpen, onClose, onOpenRegister }) {
           placeholder="Email"
           className="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-primGreen"
           value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
         <input
@@ -52,7 +51,7 @@ export default function LoginModal({ isOpen, onClose, onOpenRegister }) {
           placeholder="Password"
           className="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-primGreen"
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
         <button
@@ -63,7 +62,7 @@ export default function LoginModal({ isOpen, onClose, onOpenRegister }) {
         </button>
       </form>
       <p className="mt-4 text-center">
-        Don't have an account?{' '}
+        Don't have an account?{" "}
         <button
           type="button"
           className="underline text-primGreen hover:text-sekGreen transition"
@@ -78,4 +77,3 @@ export default function LoginModal({ isOpen, onClose, onOpenRegister }) {
     </Modal>
   );
 }
-

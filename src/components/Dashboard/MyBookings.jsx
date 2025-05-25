@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Loading from '../Loading';
-import Modal   from '../Modals/Modal';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Loading from "../Loading";
+import Modal from "../Modals/Modal";
 
 export default function MyBookings() {
   const navigate = useNavigate();
-  const [bookings, setBookings]       = useState([]);
-  const [loading, setLoading]         = useState(true);
-  const [error, setError]             = useState('');
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const [toDeleteId, setToDeleteId]   = useState(null);
+  const [toDeleteId, setToDeleteId] = useState(null);
 
-  const username = localStorage.getItem('username');
-  const token    = localStorage.getItem('accessToken');
-  const baseUrl  = 'https://v2.api.noroff.dev/holidaze';
-  const API_KEY = import.meta.env.VITE_NOROFF_API_KEY; 
+  const username = localStorage.getItem("username");
+  const token = localStorage.getItem("accessToken");
+  const baseUrl = "https://v2.api.noroff.dev/holidaze";
+  const API_KEY = import.meta.env.VITE_NOROFF_API_KEY;
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -24,16 +24,16 @@ export default function MyBookings() {
           {
             headers: {
               Authorization: `Bearer ${token}`,
-              'X-Noroff-API-Key': `${API_KEY}`
-            }
-          }
+              "X-Noroff-API-Key": `${API_KEY}`,
+            },
+          },
         );
         if (!res.ok) throw new Error(`Feil ${res.status}`);
         const json = await res.json();
         setBookings(json.data);
       } catch (err) {
         console.error(err);
-        setError('Kunne ikke laste dine bookinger.');
+        setError("Kunne ikke laste dine bookinger.");
       } finally {
         setLoading(false);
       }
@@ -49,17 +49,17 @@ export default function MyBookings() {
   const confirmDelete = async () => {
     try {
       const res = await fetch(`${baseUrl}/bookings/${toDeleteId}`, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
-          'X-Noroff-API-Key': `${API_KEY}`
-        }
+          "X-Noroff-API-Key": `${API_KEY}`,
+        },
       });
-      if (!res.ok) throw new Error('Sletting mislyktes');
-      setBookings(bs => bs.filter(b => b.id !== toDeleteId));
+      if (!res.ok) throw new Error("Sletting mislyktes");
+      setBookings((bs) => bs.filter((b) => b.id !== toDeleteId));
     } catch (err) {
       console.error(err);
-      alert('Kunne ikke slette bookingen.');
+      alert("Kunne ikke slette bookingen.");
     } finally {
       setConfirmOpen(false);
       setToDeleteId(null);
@@ -67,9 +67,8 @@ export default function MyBookings() {
   };
 
   if (loading) return <Loading />;
-  if (error)   return <p className="text-red-600">{error}</p>;
+  if (error) return <p className="text-red-600">{error}</p>;
   if (bookings.length === 0) return <p>No bookings found</p>;
-  
 
   return (
     <>
@@ -77,17 +76,19 @@ export default function MyBookings() {
         {bookings.map((b) => (
           <div key={b.id} className="bg-white shadow flex flex-col">
             <img
-              src={b.venue?.media?.[0]?.url || '/assets/placeholder-image.jpg'}
-              alt={b.venue?.name || 'Venue image'}
+              src={b.venue?.media?.[0]?.url || "/assets/placeholder-image.jpg"}
+              alt={b.venue?.name || "Venue image"}
               className="w-full h-40 object-cover"
             />
             <div className="p-4 flex-1 flex flex-col">
               <h2 className="text-xl font-semibold mb-1">{b.venue.name}</h2>
               <p className="text-gray-600 text-sm">
-                {new Date(b.dateFrom).toLocaleDateString('no-NO')} –{' '}
-                {new Date(b.dateTo).toLocaleDateString('no-NO')}
+                {new Date(b.dateFrom).toLocaleDateString("no-NO")} –{" "}
+                {new Date(b.dateTo).toLocaleDateString("no-NO")}
               </p>
-              <p className="text-gray-800 font-bold mt-2">{b.guests} guest(s)</p>
+              <p className="text-gray-800 font-bold mt-2">
+                {b.guests} guest(s)
+              </p>
               <div className="mt-auto flex space-x-2 pt-4">
                 <button
                   onClick={() => handleDeleteClick(b.id)}
@@ -125,4 +126,3 @@ export default function MyBookings() {
     </>
   );
 }
-

@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import Loading from '../Loading';
+import React, { useEffect, useState } from "react";
+import Loading from "../Loading";
 
 export default function BookingsToMyVenuesList() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    const user = localStorage.getItem('username');
-    const baseUrl = 'https://v2.api.noroff.dev/holidaze';
+    const token = localStorage.getItem("accessToken");
+    const user = localStorage.getItem("username");
+    const baseUrl = "https://v2.api.noroff.dev/holidaze";
     const API_KEY = import.meta.env.VITE_NOROFF_API_KEY;
 
     if (!token || !user) {
-      setError('Du må være logget inn.');
+      setError("Du må være logget inn.");
       setLoading(false);
       return;
     }
@@ -25,21 +25,21 @@ export default function BookingsToMyVenuesList() {
           {
             headers: {
               Authorization: `Bearer ${token}`,
-              'X-Noroff-API-Key': `${API_KEY}`
-            }
-          }
+              "X-Noroff-API-Key": `${API_KEY}`,
+            },
+          },
         );
         if (!res.ok) throw new Error(`Feil ${res.status}`);
         const { data: myVenues } = await res.json();
 
         const allBookings = myVenues.flatMap((venue) =>
-          (venue.bookings || []).map((b) => ({ ...b, venue }))
+          (venue.bookings || []).map((b) => ({ ...b, venue })),
         );
 
         setBookings(allBookings);
       } catch (err) {
         console.error(err);
-        setError('Could not load your bookings.');
+        setError("Could not load your bookings.");
       } finally {
         setLoading(false);
       }
@@ -48,7 +48,12 @@ export default function BookingsToMyVenuesList() {
     fetchMyBookings();
   }, []);
 
-  if (loading) return <p><Loading/></p>;
+  if (loading)
+    return (
+      <p>
+        <Loading />
+      </p>
+    );
   if (error) return <p className="text-red-600">{error}</p>;
 
   const now = new Date();
@@ -69,7 +74,7 @@ export default function BookingsToMyVenuesList() {
             )}
             {/* Venue Image */}
             <img
-              src={b.venue.media[0]?.url || '/assets/placeholder-image.jpg'}
+              src={b.venue.media[0]?.url || "/assets/placeholder-image.jpg"}
               alt={b.venue.media[0]?.alt || b.venue.name}
               className="w-full h-40 object-cover"
             />
@@ -81,12 +86,13 @@ export default function BookingsToMyVenuesList() {
               </h2>
 
               <p className="text-textSek text-sm mb-1">
-                {new Date(b.dateFrom).toLocaleDateString('no-NO')} –{' '}
-                {new Date(b.dateTo).toLocaleDateString('no-NO')}
+                {new Date(b.dateFrom).toLocaleDateString("no-NO")} –{" "}
+                {new Date(b.dateTo).toLocaleDateString("no-NO")}
               </p>
 
               <p className="text-textSek text-sm">
-                Booked by: <span className="font-medium">{b.customer.name}</span>
+                Booked by:{" "}
+                <span className="font-medium">{b.customer.name}</span>
               </p>
               <p className="text-textSek text-sm mb-2">
                 Email: <span className="font-medium">{b.customer.email}</span>

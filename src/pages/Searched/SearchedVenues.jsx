@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
-import { LuSearch, LuChevronUp } from 'react-icons/lu';
-import VenueCard from '../../components/Home/VenueCard';
-import Loading from '../../components/Loading';
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useLocation } from "react-router-dom";
+import { LuSearch, LuChevronUp } from "react-icons/lu";
+import VenueCard from "../../components/Home/VenueCard";
+import Loading from "../../components/Loading";
 
 export default function SearchedVenues() {
   const location = useLocation();
-  const initialQuery = location.state?.query ?? '';
+  const initialQuery = location.state?.query ?? "";
   const [searchTerm, setSearchTerm] = useState(initialQuery);
   const [query, setQuery] = useState(initialQuery);
   const [venues, setVenues] = useState([]);
@@ -29,23 +29,24 @@ export default function SearchedVenues() {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const json = await res.json();
 
-      setVenues(prev => {
+      setVenues((prev) => {
         if (page === 1) return json.data;
-        const existingIds = new Set(prev.map(v => v.id));
-        const newItems = json.data.filter(v => !existingIds.has(v.id));
+        const existingIds = new Set(prev.map((v) => v.id));
+        const newItems = json.data.filter((v) => !existingIds.has(v.id));
         return [...prev, ...newItems];
       });
 
-      setHasMore(json.meta ? !json.meta.isLastPage : json.data.length === limit);
+      setHasMore(
+        json.meta ? !json.meta.isLastPage : json.data.length === limit,
+      );
     } catch (err) {
       console.error(err);
-      setError('Was not able to fetch venues');
+      setError("Was not able to fetch venues");
     } finally {
       setLoading(false);
     }
   }, [query, page]);
 
-  
   useEffect(() => {
     if (page === 1) {
       setVenues([]);
@@ -54,35 +55,33 @@ export default function SearchedVenues() {
     fetchVenues();
   }, [fetchVenues, page]);
 
-
   const lastVenueRef = useCallback(
-    node => {
+    (node) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver(entries => {
+      observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
-          setPage(prev => prev + 1);
+          setPage((prev) => prev + 1);
         }
       });
       if (node) observer.current.observe(node);
     },
-    [loading, hasMore]
+    [loading, hasMore],
   );
-
 
   useEffect(() => {
     const onScroll = () => {
       setShowTopBtn(window.scrollY > 300);
     };
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const trimmed = searchTerm.trim();
     if (trimmed && trimmed !== query) {
@@ -101,7 +100,7 @@ export default function SearchedVenues() {
           type="text"
           placeholder="Where to?"
           value={searchTerm}
-          onChange={e => setSearchTerm(e.target.value)}
+          onChange={(e) => setSearchTerm(e.target.value)}
           className="flex-grow px-4 py-3 text-lg outline-none bg-sekBG"
         />
         <button type="submit" className="px-6 flex items-center justify-center">
@@ -109,7 +108,9 @@ export default function SearchedVenues() {
         </button>
       </form>
 
-      {!query && <div className="text-center py-10">No search term provided</div>}
+      {!query && (
+        <div className="text-center py-10">No search term provided</div>
+      )}
       {error && <div className="text-center py-10 text-redPrim">{error}</div>}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -125,13 +126,17 @@ export default function SearchedVenues() {
           return <VenueCard key={venue.id} venue={venue} />;
         })}
       </div>
-      {loading && <div className="text-center py-10"><Loading /></div>}
+      {loading && (
+        <div className="text-center py-10">
+          <Loading />
+        </div>
+      )}
       {!hasMore && !loading && query && venues.length > 0 && (
         <div className="text-center py-10 text-textSek">
           No more results for “{query}”.
         </div>
       )}
-      
+
       {!loading && !venues.length && query && (
         <div className="text-center py-10 text-textSek">
           No venues found for “{query}”.

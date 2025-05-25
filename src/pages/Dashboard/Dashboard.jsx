@@ -1,31 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import EditProfileModal from '../../components/Modals/EditProfileModal';
-import { useNavigate } from 'react-router-dom';
-import MyVenuesList from '../../components/Dashboard/MyVenuesList';
-import BookingsToMyVenuesList from '../../components/Dashboard/BookingsToMyVenuesList';
-import MyBookings from '../../components/Dashboard/MyBookings';
+import React, { useEffect, useState } from "react";
+import EditProfileModal from "../../components/Modals/EditProfileModal";
+import { useNavigate } from "react-router-dom";
+import MyVenuesList from "../../components/Dashboard/MyVenuesList";
+import BookingsToMyVenuesList from "../../components/Dashboard/BookingsToMyVenuesList";
+import MyBookings from "../../components/Dashboard/MyBookings";
 
 export default function HostDashboard() {
   const navigate = useNavigate();
-  const [bannerUrl, setBannerUrl] = useState('');
-  const [avatarUrl, setAvatarUrl] = useState('');
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
+  const [bannerUrl, setBannerUrl] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [venueManager, setVenueManager] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalError, setModalError] = useState('');
+  const [modalError, setModalError] = useState("");
   const API_KEY = import.meta.env.VITE_NOROFF_API_KEY;
 
-  const [bannerInput, setBannerInput] = useState('');
-  const [avatarInput, setAvatarInput] = useState('');
+  const [bannerInput, setBannerInput] = useState("");
+  const [avatarInput, setAvatarInput] = useState("");
   const [venueManagerInput, setVenueManagerInput] = useState(false);
-  const [activeTab, setActiveTab] = useState('');
+  const [activeTab, setActiveTab] = useState("");
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    const user = localStorage.getItem('username');
-    const baseUrl = 'https://v2.api.noroff.dev/holidaze';
+    const token = localStorage.getItem("accessToken");
+    const user = localStorage.getItem("username");
+    const baseUrl = "https://v2.api.noroff.dev/holidaze";
 
     async function fetchProfile() {
       setUsername(user);
@@ -33,8 +33,8 @@ export default function HostDashboard() {
         const res = await fetch(`${baseUrl}/profiles/${user}`, {
           headers: {
             Authorization: `Bearer ${token}`,
-            'X-Noroff-API-Key': `${API_KEY}`
-          }
+            "X-Noroff-API-Key": `${API_KEY}`,
+          },
         });
         if (!res.ok) throw new Error(`Failed to fetch profile: ${res.status}`);
         const { data } = await res.json();
@@ -45,7 +45,7 @@ export default function HostDashboard() {
         setVenueManager(data.venueManager);
       } catch (err) {
         console.error(err);
-        setError('Could not load profile data.');
+        setError("Could not load profile data.");
       }
     }
 
@@ -56,43 +56,44 @@ export default function HostDashboard() {
     setBannerInput(bannerUrl);
     setAvatarInput(avatarUrl);
     setVenueManagerInput(venueManager);
-    setModalError('');
+    setModalError("");
     setIsModalOpen(true);
   };
 
   const saveProfile = async () => {
-    const token = localStorage.getItem('accessToken');
-    const user = localStorage.getItem('username');
-    const baseUrl = 'https://v2.api.noroff.dev/holidaze';
+    const token = localStorage.getItem("accessToken");
+    const user = localStorage.getItem("username");
+    const baseUrl = "https://v2.api.noroff.dev/holidaze";
 
     try {
       const res = await fetch(`${baseUrl}/profiles/${user}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-          'X-Noroff-API-Key':  `${API_KEY}`
+          "Content-Type": "application/json",
+          "X-Noroff-API-Key": `${API_KEY}`,
         },
         body: JSON.stringify({
           banner: { url: bannerInput },
           avatar: { url: avatarInput },
-          venueManager: venueManagerInput
-        })
+          venueManager: venueManagerInput,
+        }),
       });
       if (!res.ok) {
         const errorText = await res.text();
-        const apiMessage = JSON.parse(errorText).errors?.[0]?.message || `Status ${res.status}`;
+        const apiMessage =
+          JSON.parse(errorText).errors?.[0]?.message || `Status ${res.status}`;
         throw new Error(apiMessage);
       }
       setBannerUrl(bannerInput);
       setAvatarUrl(avatarInput);
       setVenueManager(venueManagerInput);
       if (!venueManagerInput) {
-        setActiveTab('bookings');
+        setActiveTab("bookings");
       }
       setIsModalOpen(false);
     } catch (err) {
-      setModalError(err.message || 'Failed to update profile.');
+      setModalError(err.message || "Failed to update profile.");
     }
   };
 
@@ -137,53 +138,50 @@ export default function HostDashboard() {
         </div>
 
         <div className="mt-8 border-b">
-        <nav className="flex space-x-8">
+          <nav className="flex space-x-8">
             <button
-              onClick={() => setActiveTab('bookings')}
-              className={activeTab === 'bookings'
-                ? 'pb-2 border-b-2 border-green-700 text-green-700'
-                : 'pb-2 text-gray-600'
+              onClick={() => setActiveTab("bookings")}
+              className={
+                activeTab === "bookings"
+                  ? "pb-2 border-b-2 border-green-700 text-green-700"
+                  : "pb-2 text-gray-600"
               }
             >
               Bookings
             </button>
 
             {venueManager && (
-            <button
-              onClick={() => setActiveTab('venues')}
-              className={activeTab === 'venues'
-                ? 'pb-2 border-b-2 border-green-700 text-green-700'
-                : 'pb-2 text-gray-600'
-              }
-            >
-              Your venues
-            </button>
+              <button
+                onClick={() => setActiveTab("venues")}
+                className={
+                  activeTab === "venues"
+                    ? "pb-2 border-b-2 border-green-700 text-green-700"
+                    : "pb-2 text-gray-600"
+                }
+              >
+                Your venues
+              </button>
             )}
 
             {venueManager && (
-            <button
-              onClick={() => setActiveTab('bookingsTo')}
-              className={activeTab === 'bookingsTo'
-                ? 'pb-2 border-b-2 border-green-700 text-green-700'
-                : 'pb-2 text-gray-600'
-              }
-            >
-              Bookings to your venue
-            </button>
+              <button
+                onClick={() => setActiveTab("bookingsTo")}
+                className={
+                  activeTab === "bookingsTo"
+                    ? "pb-2 border-b-2 border-green-700 text-green-700"
+                    : "pb-2 text-gray-600"
+                }
+              >
+                Bookings to your venue
+              </button>
             )}
           </nav>
         </div>
 
         <div className="mt-6">
-          {activeTab === 'bookings' && (
-            <MyBookings />
-          )}
-          {activeTab === 'venues' && (
-            <MyVenuesList />
-          )}
-          {activeTab === 'bookingsTo' && (
-            <BookingsToMyVenuesList />
-          )}
+          {activeTab === "bookings" && <MyBookings />}
+          {activeTab === "venues" && <MyVenuesList />}
+          {activeTab === "bookingsTo" && <BookingsToMyVenuesList />}
         </div>
       </div>
 
@@ -202,5 +200,3 @@ export default function HostDashboard() {
     </div>
   );
 }
-
-

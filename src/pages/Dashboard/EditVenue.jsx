@@ -1,36 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function EditVenue() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const token = localStorage.getItem('accessToken');
-  const baseUrl = 'https://v2.api.noroff.dev/holidaze';
+  const token = localStorage.getItem("accessToken");
+  const baseUrl = "https://v2.api.noroff.dev/holidaze";
   const API_KEY = import.meta.env.VITE_NOROFF_API_KEY;
 
-  const [images, setImages] = useState(['']);
-  const [name, setName] = useState('');
-  const [maxGuests, setMaxGuests] = useState('');
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [country, setCountry] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [amenities, setAmenities] = useState({ wifi: false, parking: false, breakfast: false, pets: false });
-  const [error, setError] = useState('');
+  const [images, setImages] = useState([""]);
+  const [name, setName] = useState("");
+  const [maxGuests, setMaxGuests] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [amenities, setAmenities] = useState({
+    wifi: false,
+    parking: false,
+    breakfast: false,
+    pets: false,
+  });
+  const [error, setError] = useState("");
 
   useEffect(() => {
     fetch(`${baseUrl}/venues/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
-        'X-Noroff-API-Key': `${API_KEY}`,
+        "X-Noroff-API-Key": `${API_KEY}`,
       },
     })
-      .then(res => {
+      .then((res) => {
         if (!res.ok) throw new Error(`Failed to fetch: ${res.status}`);
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
         const v = data.data;
         setName(v.name);
         setMaxGuests(v.maxGuests.toString());
@@ -39,21 +44,26 @@ export default function EditVenue() {
         setCity(v.location.city);
         setCountry(v.location.country);
         setDescription(v.description);
-        setImages(v.media.map(m => m.url));
+        setImages(v.media.map((m) => m.url));
         setAmenities(v.meta);
       })
-      .catch(err => setError(err.message));
+      .catch((err) => setError(err.message));
   }, [id]);
 
-  const isValidUrl = url => {
-    try { new URL(url); return true; } catch { return false; }
+  const isValidUrl = (url) => {
+    try {
+      new URL(url);
+      return true;
+    } catch {
+      return false;
+    }
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    if (images.some(u => !u.trim() || !isValidUrl(u))) {
-      setError('One or more image URLs are invalid.');
+    setError("");
+    if (images.some((u) => !u.trim() || !isValidUrl(u))) {
+      setError("One or more image URLs are invalid.");
       return;
     }
 
@@ -62,18 +72,18 @@ export default function EditVenue() {
       description,
       price: Number(price),
       maxGuests: Number(maxGuests),
-      media: images.map(u => ({ url: u, alt: '' })),
+      media: images.map((u) => ({ url: u, alt: "" })),
       location: { address, city, country },
       meta: amenities,
     };
 
     try {
       const res = await fetch(`${baseUrl}/venues/${id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
-          'X-Noroff-API-Key': `${API_KEY}`,
-          'Content-Type': 'application/json',
+          "X-Noroff-API-Key": `${API_KEY}`,
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
       });
@@ -81,13 +91,14 @@ export default function EditVenue() {
         const text = await res.text();
         throw new Error(text || res.statusText);
       }
-      navigate('/dashboard');
+      navigate("/dashboard");
     } catch (err) {
       setError(err.message);
     }
   };
 
-  const toggleAmenity = key => setAmenities(a => ({ ...a, [key]: !a[key] }));
+  const toggleAmenity = (key) =>
+    setAmenities((a) => ({ ...a, [key]: !a[key] }));
 
   return (
     <div className="max-w-3xl mx-auto p-6 flex flex-col space-y-6">
@@ -106,14 +117,20 @@ export default function EditVenue() {
                 type="text"
                 placeholder={`Image ${i + 1} URL`}
                 value={url}
-                onChange={e => setImages(imgs => imgs.map((u,j) => j === i ? e.target.value : u))}
+                onChange={(e) =>
+                  setImages((imgs) =>
+                    imgs.map((u, j) => (j === i ? e.target.value : u)),
+                  )
+                }
                 className="flex-grow border rounded p-2"
                 required
               />
               {i > 0 && (
                 <button
                   type="button"
-                  onClick={() => setImages(imgs => imgs.filter((_, j) => j !== i))}
+                  onClick={() =>
+                    setImages((imgs) => imgs.filter((_, j) => j !== i))
+                  }
                   className="ml-2 text-white bg-redPrim px-3 py-1 rounded hover:bg-redSek transition"
                 >
                   X
@@ -124,11 +141,14 @@ export default function EditVenue() {
           <button
             type="button"
             onClick={() => {
-              if (isValidUrl(images[images.length - 1])) setImages(imgs => [...imgs, '']);
+              if (isValidUrl(images[images.length - 1]))
+                setImages((imgs) => [...imgs, ""]);
             }}
             disabled={!isValidUrl(images[images.length - 1])}
             className={`text-primGreen underline mx-auto hover:text-sekGreen transition hover:no-underline ${
-              !isValidUrl(images[images.length - 1]) ? 'opacity-50 cursor-not-allowed' : ''
+              !isValidUrl(images[images.length - 1])
+                ? "opacity-50 cursor-not-allowed"
+                : ""
             }`}
           >
             Add image
@@ -141,7 +161,7 @@ export default function EditVenue() {
           <input
             type="text"
             value={name}
-            onChange={e => setName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
             className="w-full border rounded p-2"
             required
           />
@@ -152,7 +172,7 @@ export default function EditVenue() {
           <input
             type="number"
             value={maxGuests}
-            onChange={e => setMaxGuests(e.target.value)}
+            onChange={(e) => setMaxGuests(e.target.value)}
             className="w-full border rounded p-2"
             required
           />
@@ -166,7 +186,7 @@ export default function EditVenue() {
               type="text"
               placeholder="Address"
               value={address}
-              onChange={e => setAddress(e.target.value)}
+              onChange={(e) => setAddress(e.target.value)}
               className="border rounded p-2 flex-1"
               required
             />
@@ -174,7 +194,7 @@ export default function EditVenue() {
               type="text"
               placeholder="City"
               value={city}
-              onChange={e => setCity(e.target.value)}
+              onChange={(e) => setCity(e.target.value)}
               className="border rounded p-2 flex-1"
               required
             />
@@ -182,7 +202,7 @@ export default function EditVenue() {
               type="text"
               placeholder="Country"
               value={country}
-              onChange={e => setCountry(e.target.value)}
+              onChange={(e) => setCountry(e.target.value)}
               className="border rounded p-2 flex-1"
               required
             />
@@ -194,7 +214,7 @@ export default function EditVenue() {
           <label className="block mb-1 font-medium">Description</label>
           <textarea
             value={description}
-            onChange={e => setDescription(e.target.value)}
+            onChange={(e) => setDescription(e.target.value)}
             className="w-full border rounded p-2 h-32"
             required
           />
@@ -206,7 +226,7 @@ export default function EditVenue() {
             type="number"
             placeholder="Price"
             value={price}
-            onChange={e => setPrice(e.target.value)}
+            onChange={(e) => setPrice(e.target.value)}
             className="w-32 border rounded p-2"
             required
           />
@@ -225,7 +245,9 @@ export default function EditVenue() {
                   onChange={() => toggleAmenity(key)}
                   className="form-checkbox h-5 w-5 text-green-700"
                 />
-                <span className="capitalize">{key === 'pets' ? 'Pets allowed' : key}</span>
+                <span className="capitalize">
+                  {key === "pets" ? "Pets allowed" : key}
+                </span>
               </label>
             ))}
           </div>
@@ -241,7 +263,7 @@ export default function EditVenue() {
           </button>
           <button
             type="button"
-            onClick={() => navigate('/dashboard')}
+            onClick={() => navigate("/dashboard")}
             className="self-start mx-auto text-redPrim underline hover:text-redSek transition"
           >
             Cancel
