@@ -103,5 +103,3 @@ In the project directory, you can run:
 * **React Router**: [https://reactrouter.com/](https://reactrouter.com/)
 
 ---
-
-> *Happy coding, and may your bookings always be confirmed!*
