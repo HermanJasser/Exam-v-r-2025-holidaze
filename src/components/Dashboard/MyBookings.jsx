@@ -81,7 +81,7 @@ export default function MyBookings() {
               className="w-full h-40 object-cover"
             />
             <div className="p-4 flex-1 flex flex-col">
-              <h2 className="text-xl font-semibold mb-1">{b.venue.name}</h2>
+              <h2 className="text-xl font-semibold mb-1 truncate">{b.venue.name}</h2>
               <p className="text-gray-600 text-sm">
                 {new Date(b.dateFrom).toLocaleDateString("no-NO")} –{" "}
                 {new Date(b.dateTo).toLocaleDateString("no-NO")}

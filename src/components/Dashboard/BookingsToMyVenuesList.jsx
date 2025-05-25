@@ -50,9 +50,8 @@ export default function BookingsToMyVenuesList() {
 
   if (loading)
     return (
-      <p>
+    
         <Loading />
-      </p>
     );
   if (error) return <p className="text-red-600">{error}</p>;
 
@@ -81,7 +80,7 @@ export default function BookingsToMyVenuesList() {
 
             {/* Content */}
             <div className="p-4 flex flex-col h-full">
-              <h2 className="text-xl font-semibold mb-2 text-textPrim">
+              <h2 className="text-xl font-semibold mb-2 text-textPrim truncate">
                 {b.venue.name}
               </h2>
 

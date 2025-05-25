@@ -172,7 +172,7 @@ export default function HostVenue() {
         {/* Location */}
         <div>
           <h2 className="font-semibold mb-2">Location</h2>
-          <div className="flex flex-col w-[300px] sm:w-auto sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+          <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
             <input
               type="text"
               placeholder="Address"

@@ -68,9 +68,7 @@ export default function MyVenuesList() {
 
   if (loading)
     return (
-      <p>
         <Loading />
-      </p>
     );
   if (error) return <p className="text-red-600">{error}</p>;
 
@@ -95,7 +93,7 @@ export default function MyVenuesList() {
                 <p className="text-textSek text-sm">
                   {v.location.city}, {v.location.country}
                 </p>
-                <h2 className="mt-1 font-semibold text-lg text-textPrim">
+                <h2 className="mt-1 font-semibold text-lg text-textPrim truncate">
                   {v.name}
                 </h2>
                 <p className="text-textSek text-sm mt-1">{v.maxGuests} beds</p>

@@ -10,12 +10,11 @@ export default function VenuesList() {
   const [error, setError] = useState(null);
   const observer = useRef();
 
-  // Fetch venues for the given page with duplicate filtering
   const fetchVenues = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const limit = 100; // items per page
+      const limit = 100; 
       const res = await fetch(
         `https://v2.api.noroff.dev/holidaze/venues?sort=created&sortOrder=desc&page=${page}&limit=${limit}`,
       );
