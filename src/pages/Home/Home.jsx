@@ -16,7 +16,6 @@ export default function Home() {
     }
   };
 
-  // Vis knappen når brukeren har scrollet mer enn 300px
   useEffect(() => {
     const onScroll = () => {
       setShowTopBtn(window.scrollY > 300);
@@ -32,14 +31,14 @@ export default function Home() {
   return (
     <div className="">
       <div className="relative h-screen pt-[80px] overflow-hidden mt-[-80px]">
-        {/* 1) Bakgrunnsbildet */}
+      
         <img
-          src="/assets/norwegian-valley.jpeg"
+          src="/assets/norwegian-valley.jpg"
           alt="norwegian valley"
           className="absolute inset-0 w-full h-full object-cover"
         />
 
-        {/* 2) Overlay */}
+   
         <div className="mt-[-80px] relative z-10 flex flex-col items-center justify-center h-full px-4">
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-center text-[#013659]">
             Search for your dream destination
@@ -58,7 +57,7 @@ export default function Home() {
             />
             <button
               type="submit"
-              className="px-6 flex items-center justify-center"
+              className="px-6 flex items-center justify-center transition hover:scale-[1.1]"
             >
               <LuSearch className="text-2xl text-primGreen" />
             </button>
@@ -70,7 +69,6 @@ export default function Home() {
         <ListVenues />
       </div>
 
-      {/* Back to Top-knapp */}
       {showTopBtn && (
         <button
           onClick={scrollToTop}

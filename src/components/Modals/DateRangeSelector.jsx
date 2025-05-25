@@ -1,22 +1,16 @@
-// src/components/Modals/DateRangeSelector.jsx
 import React, { useState, useEffect } from 'react';
 import { DateRange }              from 'react-date-range';
 import { addDays }                from 'date-fns';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 
-/**
- * Props:
- *   range: { startDate: Date, endDate: Date }
- *   onChange: ({ startDate, endDate }) => void
- *   disabledRanges?: Array<{ startDate: Date, endDate: Date }>
- */
+
 export default function DateRangeSelector({
   range,
   onChange,
   disabledRanges = []
 }) {
-  // 1) build array of disabledDates
+
   const disabledDates = disabledRanges.flatMap(r => {
     const all = [];
     let d = new Date(r.startDate);
@@ -27,7 +21,7 @@ export default function DateRangeSelector({
     return all;
   });
 
-  // 2) track whether we're on a narrow viewport
+ 
   const [isMobile, setIsMobile] = useState(
     typeof window !== 'undefined' && window.innerWidth < 768
   );
@@ -42,7 +36,7 @@ export default function DateRangeSelector({
 
   return (
     <DateRange
-      // switch to 1 month vertical on mobile, else 2 horizontal
+     
       months={isMobile ? 1 : 2}
       direction={isMobile ? 'vertical' : 'horizontal'}
 
@@ -51,12 +45,12 @@ export default function DateRangeSelector({
       disabledDates={disabledDates}
       onChange={({ selection }) => onChange(selection)}
 
-      // keep your existing behaviors
+
       showSelectionPreview
       moveRangeOnFirstSelection={false}
       retainEndDateOnFirstSelection
 
-      // force the react-date-range wrapper to grow to its contents
+ 
       className={`
         !rounded-lg
         !shadow-lg

@@ -14,6 +14,7 @@ export default function MyBookings() {
   const username = localStorage.getItem('username');
   const token    = localStorage.getItem('accessToken');
   const baseUrl  = 'https://v2.api.noroff.dev/holidaze';
+  const API_KEY = import.meta.env.VITE_NOROFF_API_KEY; 
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -23,7 +24,7 @@ export default function MyBookings() {
           {
             headers: {
               Authorization: `Bearer ${token}`,
-              'X-Noroff-API-Key': '3d9461d4-d476-4b79-8364-62104fda6397'
+              'X-Noroff-API-Key': `${API_KEY}`
             }
           }
         );
@@ -51,7 +52,7 @@ export default function MyBookings() {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
-          'X-Noroff-API-Key': '3d9461d4-d476-4b79-8364-62104fda6397'
+          'X-Noroff-API-Key': `${API_KEY}`
         }
       });
       if (!res.ok) throw new Error('Sletting mislyktes');

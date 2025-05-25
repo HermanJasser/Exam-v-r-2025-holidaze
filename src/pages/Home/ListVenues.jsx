@@ -31,22 +31,20 @@ export default function VenuesList() {
         return [...prev, ...newItems];
       });
 
-      // Determine if more pages exist
       setHasMore(json.meta ? !json.meta.isLastPage : json.data.length === limit);
     } catch (err) {
       console.error(err);
-      setError('Could not fetch venues.');
+      setError('Could not load venues.');
     } finally {
       setLoading(false);
     }
   }, [page]);
 
-  // Initial & page change fetch
+ 
   useEffect(() => {
     fetchVenues();
   }, [fetchVenues]);
 
-  // IntersectionObserver callback to load more when last card is visible
   const lastVenueRef = useCallback(
     node => {
       if (loading) return;
@@ -79,7 +77,7 @@ export default function VenuesList() {
       {loading && <div className="col-span-full text-center py-10"><Loading /></div>}
 
       {!hasMore && !loading && (
-        <div className="col-span-full text-center py-10 text-gray-500">
+        <div className="col-span-full text-center py-10 text-textSek">
           No more venues to display.
         </div>
       )}

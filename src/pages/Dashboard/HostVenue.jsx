@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 export default function HostVenue() {
   const token = localStorage.getItem("accessToken");
   const username = localStorage.getItem("username");
   const baseUrl = "https://v2.api.noroff.dev/holidaze";
+  const API_KEY = import.meta.env.VITE_NOROFF_API_KEY;
+
 
   const [images, setImages] = useState([""]);
   const [name, setName] = useState("");
@@ -55,7 +58,7 @@ export default function HostVenue() {
     setError("");
     setSuccess("");
 
-    // Validate image URLs before sending
+
     const trimmed = images.filter((u) => u.trim());
     const invalidImage = trimmed.find((url) => !isValidUrl(url));
     if (invalidImage) {
@@ -68,7 +71,7 @@ export default function HostVenue() {
       return;
     }
 
-    // Map URLs to objects with alt
+  
     const mediaPayload = trimmed.map((url) => ({ url, alt: "" }));
 
     const body = {
@@ -86,7 +89,7 @@ export default function HostVenue() {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
-          "X-Noroff-API-Key": "3d9461d4-d476-4b79-8364-62104fda6397",
+          "X-Noroff-API-Key": `${API_KEY}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
@@ -97,7 +100,7 @@ export default function HostVenue() {
         throw new Error(apiMessage);
       }
       setSuccess("Venue created successfully!");
-      // reset
+      
       navigate("/dashboard");
      
 
@@ -115,7 +118,7 @@ export default function HostVenue() {
 
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Images */}
+       
         <div className="flex flex-col">
           <h2 className="font-semibold mb-2">Images</h2>
           {images.map((url, i) => (
@@ -153,7 +156,7 @@ export default function HostVenue() {
           </button>
         </div>
 
-        {/* Basic info */}
+        
         <div>
           <label className="block mb-1 font-medium">Venue name</label>
           <input
@@ -206,7 +209,7 @@ export default function HostVenue() {
           </div>
         </div>
 
-        {/* Description */}
+
         <div>
           <label className="block mb-1 font-medium">Description</label>
           <textarea
@@ -217,7 +220,7 @@ export default function HostVenue() {
           />
         </div>
 
-        {/* Price */}
+    
         <div className="flex items-center space-x-2">
           <input
             type="number"
@@ -230,7 +233,7 @@ export default function HostVenue() {
           <span>kr per night</span>
         </div>
 
-        {/* Amenities */}
+
         <div>
           <h2 className="font-semibold mb-2">Amenities</h2>
           <div className="flex flex-wrap gap-4">
@@ -252,7 +255,7 @@ export default function HostVenue() {
       {error && <div className="mb-4 p-3 bg-red-100 text-red-700">{error}</div>}
       {success && <div className="mb-4 p-3 bg-green-100 text-green-700">{success}</div>}
 
-        {/* Buttons */}
+       
         <div className="flex flex-col space-y-4 pt-6">
           <button
             type="submit"

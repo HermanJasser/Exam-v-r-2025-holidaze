@@ -1,4 +1,3 @@
-// src/Modals/RegisterModal.jsx
 import React, { useState } from 'react';
 import Modal from './Modal';
 

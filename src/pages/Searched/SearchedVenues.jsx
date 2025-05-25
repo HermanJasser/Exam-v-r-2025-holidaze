@@ -17,7 +17,6 @@ export default function SearchedVenues() {
   const [showTopBtn, setShowTopBtn] = useState(false);
   const observer = useRef();
 
-  // Fetch search results with pagination and filter duplicates
   const fetchVenues = useCallback(async () => {
     if (!query) return;
     setLoading(true);
@@ -46,7 +45,7 @@ export default function SearchedVenues() {
     }
   }, [query, page]);
 
-  // Trigger fetch on query or page change
+  
   useEffect(() => {
     if (page === 1) {
       setVenues([]);
@@ -55,7 +54,7 @@ export default function SearchedVenues() {
     fetchVenues();
   }, [fetchVenues, page]);
 
-  // IntersectionObserver for infinite scroll
+
   const lastVenueRef = useCallback(
     node => {
       if (loading) return;
@@ -70,7 +69,7 @@ export default function SearchedVenues() {
     [loading, hasMore]
   );
 
-  // Back to top button visibility
+
   useEffect(() => {
     const onScroll = () => {
       setShowTopBtn(window.scrollY > 300);
@@ -122,18 +121,23 @@ export default function SearchedVenues() {
               </div>
             );
           }
+
           return <VenueCard key={venue.id} venue={venue} />;
         })}
       </div>
-
       {loading && <div className="text-center py-10"><Loading /></div>}
-      {!hasMore && !loading && query && (
-        <div className="text-center py-10 text-gray-500">
+      {!hasMore && !loading && query && venues.length > 0 && (
+        <div className="text-center py-10 text-textSek">
           No more results for “{query}”.
         </div>
       )}
+      
+      {!loading && !venues.length && query && (
+        <div className="text-center py-10 text-textSek">
+          No venues found for “{query}”.
+        </div>
+      )}
 
-      {/* Back to Top button */}
       {showTopBtn && (
         <button
           onClick={scrollToTop}

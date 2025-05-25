@@ -15,6 +15,7 @@ export default function HostDashboard() {
   const [error, setError] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalError, setModalError] = useState('');
+  const API_KEY = import.meta.env.VITE_NOROFF_API_KEY;
 
   const [bannerInput, setBannerInput] = useState('');
   const [avatarInput, setAvatarInput] = useState('');
@@ -32,7 +33,7 @@ export default function HostDashboard() {
         const res = await fetch(`${baseUrl}/profiles/${user}`, {
           headers: {
             Authorization: `Bearer ${token}`,
-            'X-Noroff-API-Key': '3d9461d4-d476-4b79-8364-62104fda6397'
+            'X-Noroff-API-Key': `${API_KEY}`
           }
         });
         if (!res.ok) throw new Error(`Failed to fetch profile: ${res.status}`);
@@ -70,7 +71,7 @@ export default function HostDashboard() {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
-          'X-Noroff-API-Key': '3d9461d4-d476-4b79-8364-62104fda6397'
+          'X-Noroff-API-Key':  `${API_KEY}`
         },
         body: JSON.stringify({
           banner: { url: bannerInput },

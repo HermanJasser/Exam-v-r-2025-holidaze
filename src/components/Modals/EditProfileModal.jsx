@@ -15,31 +15,32 @@ export default function EditProfileModal({
 }) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Edit Profile">
+      <div className='w-full max-w-xl mx-auto space-y-6'>
       {errorMessage && (
-        <div className="bg-red-100 text-red-700 p-3 rounded mb-4">
+        <div className="bg-red-100 text-redPrim p-3 rounded mb-4">
           {errorMessage}
         </div>
       )}
 
-      <label className="block mb-4">
-        <span className="block font-medium text-gray-700">Banner URL</span>
+      <label className="block mb-4 w-[500px]"> </label>
+        <span className="block font-medium text-textPrim">Banner URL</span>
         <input
           type="text"
           value={bannerUrl}
           onChange={e => onBannerChange(e.target.value)}
-          className="mt-1 block w-full border rounded p-2 w-[350px]"
+          className="w-full border rounded p-2"
         />
-      </label>
+     
 
-      <label className="block mb-4">
-        <span className="block font-medium text-gray-700">Avatar URL</span>
+      <label className="block mb-4 w-[500px]"></label>
+        <span className="block font-medium text-textPrim">Avatar URL</span>
         <input
           type="text"
           value={avatarUrl}
           onChange={e => onAvatarChange(e.target.value)}
-          className="mt-1 block w-full border rounded p-2"
+          className="w-full border rounded p-2"
         />
-      </label>
+      
 
       <label className="inline-flex items-center mb-6">
         <input
@@ -51,7 +52,7 @@ export default function EditProfileModal({
         <span className="ml-2 text-gray-700">Enable venue listing</span>
       </label>
 
-      <div className="flex flex-col space-y-4 mx-auto">
+      <div className="flex flex-col space-y-4 mx-auto ">
         <button
           onClick={onSave}
           className="px-4 py-2 rounded bg-primGreen text-white hover:bg-sekGreen transition"
@@ -64,6 +65,7 @@ export default function EditProfileModal({
         >
           Cancel
         </button>
+      </div>
       </div>
     </Modal>
   );

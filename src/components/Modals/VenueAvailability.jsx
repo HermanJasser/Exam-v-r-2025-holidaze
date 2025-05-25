@@ -1,4 +1,3 @@
-// src/components/Modals/VenueAvailability.jsx
 import React, { useState, useEffect } from 'react';
 import { addDays } from 'date-fns';
 import Modal from './Modal';
@@ -16,6 +15,7 @@ export default function VenueAvailability({ isOpen, onClose, venueId, maxGuests 
   const [success, setSuccess] = useState('');
   const token = localStorage.getItem('accessToken');
   const baseUrl = 'https://v2.api.noroff.dev/holidaze';
+  const API_KEY = import.meta.env.VITE_NOROFF_API_KEY;
 
   // when modal opens, fetch existing bookings to disable dates
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function VenueAvailability({ isOpen, onClose, venueId, maxGuests 
     fetch(`${baseUrl}/bookings?venueId=${venueId}&_bookings=true`, {
       headers: {
         Authorization: `Bearer ${token}`,
-        'X-Noroff-API-Key': '3d9461d4-d476-4b79-8364-62104fda6397'
+        'X-Noroff-API-Key': `${API_KEY}`
       }
     })
     .then(r => r.ok ? r.json() : Promise.reject())
@@ -57,7 +57,7 @@ export default function VenueAvailability({ isOpen, onClose, venueId, maxGuests 
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
-          'X-Noroff-API-Key': '3d9461d4-d476-4b79-8364-62104fda6397',
+          'X-Noroff-API-Key':  `${API_KEY}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({

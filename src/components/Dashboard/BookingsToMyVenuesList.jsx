@@ -10,6 +10,7 @@ export default function BookingsToMyVenuesList() {
     const token = localStorage.getItem('accessToken');
     const user = localStorage.getItem('username');
     const baseUrl = 'https://v2.api.noroff.dev/holidaze';
+    const API_KEY = import.meta.env.VITE_NOROFF_API_KEY;
 
     if (!token || !user) {
       setError('Du må være logget inn.');
@@ -24,7 +25,7 @@ export default function BookingsToMyVenuesList() {
           {
             headers: {
               Authorization: `Bearer ${token}`,
-              'X-Noroff-API-Key': '3d9461d4-d476-4b79-8364-62104fda6397'
+              'X-Noroff-API-Key': `${API_KEY}`
             }
           }
         );
@@ -38,7 +39,7 @@ export default function BookingsToMyVenuesList() {
         setBookings(allBookings);
       } catch (err) {
         console.error(err);
-        setError('Kunne ikke hente bookinger.');
+        setError('Could not load your bookings.');
       } finally {
         setLoading(false);
       }

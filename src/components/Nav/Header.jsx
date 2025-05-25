@@ -1,7 +1,6 @@
-// src/components/Header.jsx
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation }  from 'react-router-dom';
-import { LuMapPinned, LuUser, LuMenu, LuX } from 'react-icons/lu';
+import { LuUser, LuMenu, LuX } from 'react-icons/lu';
 import LoginModal    from '../Modals/LoginModal';
 import RegisterModal from '../Modals/RegisterModal';
 import { useAuth }   from '../../context/AuthContext';
@@ -14,7 +13,6 @@ export default function Header() {
   const [showLogin, setShowLogin]       = useState(false);
   const [showRegister, setShowRegister] = useState(false);
 
-  // track scroll only on homepage
   useEffect(() => {
     if (location.pathname !== '/') return;
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -22,7 +20,7 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, [location.pathname]);
 
-  // collapse mobile menu on resize
+ 
   useEffect(() => {
     const onResize = () => window.innerWidth >= 768 && setMenuOpen(false);
     window.addEventListener('resize', onResize);
@@ -30,7 +28,7 @@ export default function Header() {
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  // Only treat as "transparent until scroll" on home page
+ 
   const isHome = location.pathname === '/';
   const isOpaque = !isHome || scrolled || menuOpen || showLogin || showRegister;
 

@@ -6,6 +6,7 @@ export default function EditVenue() {
   const navigate = useNavigate();
   const token = localStorage.getItem('accessToken');
   const baseUrl = 'https://v2.api.noroff.dev/holidaze';
+  const API_KEY = import.meta.env.VITE_NOROFF_API_KEY;
 
   const [images, setImages] = useState(['']);
   const [name, setName] = useState('');
@@ -22,7 +23,7 @@ export default function EditVenue() {
     fetch(`${baseUrl}/venues/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
-        'X-Noroff-API-Key': '3d9461d4-d476-4b79-8364-62104fda6397',
+        'X-Noroff-API-Key': `${API_KEY}`,
       },
     })
       .then(res => {
@@ -71,7 +72,7 @@ export default function EditVenue() {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
-          'X-Noroff-API-Key': '3d9461d4-d476-4b79-8364-62104fda6397',
+          'X-Noroff-API-Key': `${API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(body),

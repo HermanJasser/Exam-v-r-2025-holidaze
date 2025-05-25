@@ -19,7 +19,7 @@ export default function SingleVenue() {
     setLoading(true);
     setError(null);
 
-    fetch(`https://v2.api.noroff.dev/holidaze/venues/${id}`)
+    fetch(`https://v2.api.noroff.dev/holidaze/venues/${id}?_owner=true`,)
       .then(res => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();
@@ -42,11 +42,11 @@ export default function SingleVenue() {
 
   const { media = [], name, description, price, maxGuests, meta = {}, location = {}, owner } = venue;
 
-   // Log if media array is empty
+
    const hasMedia = Array.isArray(media) && media.length > 0;
 
   
-  // Define all possible amenities
+
   const amenities = [
     { key: 'wifi', label: 'WiFi', icon: LuWifi },
     { key: 'parking', label: 'Parking', icon: LuParkingMeter },
@@ -56,7 +56,7 @@ export default function SingleVenue() {
 
   return (
     <div className="max-w-4xl mx-auto my-20 p-4 space-y-8">
-      {/* Gallery with clickable thumbnails */}
+  
       <div>
         {hasMedia ? (
           <>
@@ -88,18 +88,18 @@ export default function SingleVenue() {
         )}
       </div>
 
-      {/* Header & Call to action */}
+    
       <div className="flex flex-col  justify-between items-start">
      
           <p className="text-sm text-gray-500 capitalize">
             {location.city}, {location.country}
           </p>
-          <h1 className="text-4xl font-bold text-gray-800 mt-1 max-w-full whitespace-normal break-words">{name}</h1>
-          <p className="text-gray-600 mt-2">
+          <h1 className="text-4xl font-bold text-textPrim mt-1 max-w-full whitespace-normal break-words">{name}</h1>
+          <p className="text-textSek mt-2">
             {maxGuests} Guest{maxGuests > 1 ? 's' : ''}
           </p>
-          <p className="mt-4 text-2xl font-semibold">
-            {price} NOK <span className="text-base font-normal text-gray-600">/ Night</span>
+          <p className="mt-4 text-2xl font-semibold text-textPrim">
+            {price} NOK <span className="text-base font-normal text-textSek">/ Night</span>
           </p>
     
           {token && (
@@ -118,7 +118,7 @@ export default function SingleVenue() {
 
       <hr />
 
-      {/* Amenities */}
+     
       <div>
         <h2 className="text-2xl font-semibold mb-4">Amenities</h2>
         <div className="grid grid-cols-2 gap-6">
@@ -139,23 +139,23 @@ export default function SingleVenue() {
 
       <hr />
 
-      {/* About */}
+  
       <div>
         <h2 className="text-2xl font-semibold mb-4">About</h2>
-        <p className="text-gray-700 leading-relaxed">{description}</p>
+        <p className="text-textPrim leading-relaxed overflow-hidden">{description}</p>
       </div>
 
       <hr />
 
-      {/* Venue manager */}
+  
       {owner && (
         <div>
           <h2 className="text-2xl font-semibold mb-4">Venue manager</h2>
           <div className="flex items-center space-x-4">
             {owner.avatar && (
               <img
-                src={owner.avatar}
-                alt={owner.name}
+                src={owner.avatar.url}
+                alt={owner.avatar.alt || `${owner.name}'s avatar`}
                 className="w-14 h-14 rounded-full object-cover"
               />
             )}

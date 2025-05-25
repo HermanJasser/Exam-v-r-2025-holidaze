@@ -10,6 +10,7 @@ import EditVenue from './pages/Dashboard/EditVenue';
 import SearchedVenues from './pages/Searched/SearchedVenues';
 import Layout from './components/Layout';
 import ProtectedRoute from './context/ProtectedRoute';  
+import NotFound from './pages/NotFound/NotFound';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/venue/:id" element={<SingleVenue />} />
             <Route path="/search/" element={<SearchedVenues />} />
+            <Route path="*" element={<NotFound />} />
             
             <Route path="/dashboard/" element={
               <ProtectedRoute>

@@ -5,15 +5,16 @@ import Modal   from '../Modals/Modal';
 
 export default function MyVenuesList() {
   const navigate = useNavigate();
-  const [venues, setVenues]         = useState([]);
-  const [loading, setLoading]       = useState(true);
-  const [error, setError]           = useState('');
+  const [venues, setVenues]           = useState([]);
+  const [loading, setLoading]         = useState(true);
+  const [error, setError]             = useState('');
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [toDeleteId, setToDeleteId]   = useState(null);
 
   const token   = localStorage.getItem('accessToken');
   const user    = localStorage.getItem('username');
   const baseUrl = 'https://v2.api.noroff.dev/holidaze';
+  const API_KEY = import.meta.env.VITE_NOROFF_API_KEY;
 
   useEffect(() => {
     const fetchVenues = async () => {
@@ -21,7 +22,7 @@ export default function MyVenuesList() {
         const res = await fetch(`${baseUrl}/profiles/${user}/venues`, {
           headers: {
             Authorization: `Bearer ${token}`,
-            'X-Noroff-API-Key': '3d9461d4-d476-4b79-8364-62104fda6397'
+            'X-Noroff-API-Key': `${API_KEY}`
           }
         });
         if (!res.ok) throw new Error(`Error ${res.status}`);
@@ -37,6 +38,11 @@ export default function MyVenuesList() {
     fetchVenues();
   }, [user, token]);
 
+
+  const handleEdit = (id) => {
+    navigate(`/dashboard/editvenue/${id}`);
+  };
+
   const handleDeleteClick = (id) => {
     setToDeleteId(id);
     setConfirmOpen(true);
@@ -48,7 +54,7 @@ export default function MyVenuesList() {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
-          'X-Noroff-API-Key': '3d9461d4-d476-4b79-8364-62104fda6397'
+          'X-Noroff-API-Key':`${API_KEY}`
         }
       });
       if (!res.ok) throw new Error('Delete failed');
@@ -69,7 +75,6 @@ export default function MyVenuesList() {
       <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {venues.map((v) => (
           <div key={v.id} className="bg-white shadow hover:shadow-lg hover:scale-[1.01] transition overflow-hidden flex flex-col">
-            {/* Link for image and details */}
             <Link to={`/venue/${v.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primGreen">
               <img
                 src={v.media[0]?.url || '/assets/placeholder-image.jpg'}
@@ -94,7 +99,6 @@ export default function MyVenuesList() {
                 </div>
               </div>
             </Link>
-            {/* Buttons outside link so always visible */}
             <div className="p-4 pt-0 flex space-x-2">
               <button
                 onClick={() => handleEdit(v.id)}
@@ -118,7 +122,7 @@ export default function MyVenuesList() {
         onClose={() => setConfirmOpen(false)}
         title="Delete venue?"
       >
-        <p>Are you sure you want to delete your vour venue?</p>
+        <p>Are you sure you want to delete your venue?</p>
         <div className="flex justify-end space-x-4 mt-6">
           <button
             onClick={() => setConfirmOpen(false)}
