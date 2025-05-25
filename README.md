@@ -101,5 +101,6 @@ In the project directory, you can run:
 * **Vite**: [https://vitejs.dev/](https://vitejs.dev/)
 * **Tailwind CSS**: [https://tailwindcss.com/](https://tailwindcss.com/)
 * **React Router**: [https://reactrouter.com/](https://reactrouter.com/)
+* **Netlify**: [https://holidaze-herman.netlify.app/](https://holidaze-herman.netlify.app/)
 
 ---
