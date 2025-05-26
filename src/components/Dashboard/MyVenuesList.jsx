@@ -68,6 +68,7 @@ export default function MyVenuesList() {
 
   if (loading) return <Loading />;
   if (error) return <p className="text-red-600">{error}</p>;
+  if (venues.length === 0) return <p>You have no venues</p>;
 
   return (
     <>

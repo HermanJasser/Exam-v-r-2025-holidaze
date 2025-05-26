@@ -50,6 +50,8 @@ export default function BookingsToMyVenuesList() {
 
   if (loading) return <Loading />;
   if (error) return <p className="text-red-600">{error}</p>;
+  if (bookings.length === 0)
+    return <p className="text-textSek">There is no bookings to your venues</p>;
 
   const now = new Date();
 
