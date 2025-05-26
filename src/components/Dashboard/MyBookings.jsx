@@ -68,7 +68,7 @@ export default function MyBookings() {
 
   if (loading) return <Loading />;
   if (error) return <p className="text-red-600">{error}</p>;
-  if (bookings.length === 0) return <p>No bookings found</p>;
+  if (bookings.length === 0) return <p>You have no bookings</p>;
 
   return (
     <>
