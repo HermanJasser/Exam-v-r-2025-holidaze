@@ -14,6 +14,7 @@ export default function SingleVenue() {
   const username = localStorage.getItem("username");
   const token = localStorage.getItem("accessToken");
 
+
   useEffect(() => {
     if (!id) return;
     setLoading(true);
@@ -66,6 +67,11 @@ export default function SingleVenue() {
     { key: "pets", label: "Pets allowed", icon: LuDog },
   ];
 
+  const myVenues = username ? venue.owner?.name === username : false;
+  //console.log(myVenues);
+
+  
+
   return (
     <div className="max-w-4xl mx-auto my-20 p-4 space-y-8">
       <div>
@@ -114,7 +120,7 @@ export default function SingleVenue() {
           <span className="text-base font-normal text-textSek">/ Night</span>
         </p>
 
-        {token && (
+        {token && !myVenues && (
           <button
             onClick={() => setIsBookOpen(true)}
             className="mt-6  px-8 py-3 bg-primGreen text-primBG font-medium rounded-lg"
