@@ -48,11 +48,7 @@ export default function BookingsToMyVenuesList() {
     fetchMyBookings();
   }, []);
 
-  if (loading)
-    return (
-    
-        <Loading />
-    );
+  if (loading) return <Loading />;
   if (error) return <p className="text-red-600">{error}</p>;
 
   const now = new Date();

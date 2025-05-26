@@ -22,10 +22,9 @@ export default function VenueAvailability({
   const baseUrl = "https://v2.api.noroff.dev/holidaze";
   const API_KEY = import.meta.env.VITE_NOROFF_API_KEY;
 
-  // when modal opens, fetch existing bookings to disable dates
   useEffect(() => {
     if (!isOpen) return;
-    fetch(`${baseUrl}/bookings?venueId=${venueId}&_bookings=true`, {
+    fetch(`${baseUrl}/venues/${venueId}/bookings`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "X-Noroff-API-Key": `${API_KEY}`,
@@ -33,6 +32,7 @@ export default function VenueAvailability({
     })
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((json) => {
+        //console.log(json.data)
         setDisabledRanges(
           json.data.map((b) => ({
             startDate: new Date(b.dateFrom),
