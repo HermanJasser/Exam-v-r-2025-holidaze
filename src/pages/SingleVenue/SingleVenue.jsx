@@ -14,7 +14,6 @@ export default function SingleVenue() {
   const username = localStorage.getItem("username");
   const token = localStorage.getItem("accessToken");
 
-
   useEffect(() => {
     if (!id) return;
     setLoading(true);
@@ -69,8 +68,6 @@ export default function SingleVenue() {
 
   const myVenues = username ? venue.owner?.name === username : false;
   //console.log(myVenues);
-
-  
 
   return (
     <div className="max-w-4xl mx-auto my-20 p-4 space-y-8">

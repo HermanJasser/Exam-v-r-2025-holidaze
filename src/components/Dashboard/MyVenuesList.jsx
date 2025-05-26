@@ -66,10 +66,7 @@ export default function MyVenuesList() {
     }
   };
 
-  if (loading)
-    return (
-        <Loading />
-    );
+  if (loading) return <Loading />;
   if (error) return <p className="text-red-600">{error}</p>;
 
   return (

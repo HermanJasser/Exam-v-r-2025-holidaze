@@ -14,7 +14,7 @@ export default function VenuesList() {
     setLoading(true);
     setError(null);
     try {
-      const limit = 100; 
+      const limit = 100;
       const res = await fetch(
         `https://v2.api.noroff.dev/holidaze/venues?sort=created&sortOrder=desc&page=${page}&limit=${limit}`,
       );

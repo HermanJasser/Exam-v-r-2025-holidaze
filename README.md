@@ -8,10 +8,10 @@
 
 Holidaze lets users browse, book and host vacation properties. Key user flows include:
 
-* **Browse** available venues with images, location & pricing
-* **Book** stays (select dates & guest count)
-* **Host** a venue (create, edit & delete listings)
-* **Manage** your bookings & profile
+- **Browse** available venues with images, location & pricing
+- **Book** stays (select dates & guest count)
+- **Host** a venue (create, edit & delete listings)
+- **Manage** your bookings & profile
 
 ---
 
@@ -19,8 +19,8 @@ Holidaze lets users browse, book and host vacation properties. Key user flows in
 
 ### Prerequisites
 
-* [Node.js](https://nodejs.org/) ≥ 18
-* [Git](https://git-scm.com/)
+- [Node.js](https://nodejs.org/) ≥ 18
+- [Git](https://git-scm.com/)
 
 ### Installation
 
@@ -64,43 +64,43 @@ Holidaze lets users browse, book and host vacation properties. Key user flows in
 
 In the project directory, you can run:
 
-* `npm run dev` / `yarn dev`
+- `npm run dev` / `yarn dev`
   Start development server with hot-reload.
 
-* `npm run build` / `yarn build`
+- `npm run build` / `yarn build`
   Bundle for production into `dist/`.
 
-* `npm run preview` / `yarn preview`
+- `npm run preview` / `yarn preview`
   Preview the production build locally.
 
-* `npm run lint`
+- `npm run lint`
   Run ESLint across your source code.
 
-* `npm run format`
+- `npm run format`
   Auto-format all files with Prettier.
 
 ---
 
 ## 🛠 Tech Stack
 
-* **Framework:** React 19
-* **Bundler:** Vite
-* **Styling:** Tailwind CSS
-* **Routing:** React Router v7
-* **Date handling:** date-fns & react-date-range
-* **API:** Noroff Holidaze v2 (profiles, venues, bookings)
-* **Icons:** react-icons
-* **Linting:** ESLint
-* **Formatting:** Prettier
+- **Framework:** React 19
+- **Bundler:** Vite
+- **Styling:** Tailwind CSS
+- **Routing:** React Router v7
+- **Date handling:** date-fns & react-date-range
+- **API:** Noroff Holidaze v2 (profiles, venues, bookings)
+- **Icons:** react-icons
+- **Linting:** ESLint
+- **Formatting:** Prettier
 
 ---
 
 ## 🔗 Useful Links
 
-* **API docs**: [https://v2.api.noroff.dev/holidaze](https://v2.api.noroff.dev/holidaze)
-* **Vite**: [https://vitejs.dev/](https://vitejs.dev/)
-* **Tailwind CSS**: [https://tailwindcss.com/](https://tailwindcss.com/)
-* **React Router**: [https://reactrouter.com/](https://reactrouter.com/)
-* **Netlify**: [https://holidaze-herman.netlify.app/](https://holidaze-herman.netlify.app/)
+- **API docs**: [https://v2.api.noroff.dev/holidaze](https://v2.api.noroff.dev/holidaze)
+- **Vite**: [https://vitejs.dev/](https://vitejs.dev/)
+- **Tailwind CSS**: [https://tailwindcss.com/](https://tailwindcss.com/)
+- **React Router**: [https://reactrouter.com/](https://reactrouter.com/)
+- **Netlify**: [https://holidaze-herman.netlify.app/](https://holidaze-herman.netlify.app/)
 
 ---
